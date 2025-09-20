@@ -170,9 +170,12 @@ export default function Admin() {
 
   const onSubmit = (data: InsertBlogPost) => {
     const tags = data.tags;
-    const tagsArray = typeof tags === 'string' 
-      ? tags.split(',').map((tag: string) => tag.trim()).filter(Boolean)
-      : (tags as string[]) || [];
+    let tagsArray: string[] = [];
+    if (typeof tags === 'string') {
+      tagsArray = tags.split(',').map((tag: string) => tag.trim()).filter(Boolean);
+    } else if (Array.isArray(tags)) {
+      tagsArray = tags;
+    }
 
     const postData = {
       ...data,
